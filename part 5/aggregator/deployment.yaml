@@ -1,0 +1,50 @@
+# aggregator/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fl-aggregator
+  namespace: openfaas-fn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fl-aggregator
+  template:
+    metadata:
+      labels:
+        app: fl-aggregator
+    spec:
+      volumes:
+      - name: shared-data
+        hostPath:
+          path: /mnt/data       
+          type: DirectoryOrCreate
+      containers:
+      - name: fl-aggregator
+        image: docker.io/hsmft/fl-aggregator:latest
+        ports:
+        - containerPort: 5001
+        volumeMounts:
+        - name: shared-data
+          mountPath: /mnt/data
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "700m"
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fl-aggregator-svc
+  namespace: openfaas-fn
+spec:
+  type: NodePort
+  selector:
+    app: fl-aggregator
+  ports:
+  - port: 5001
+    targetPort: 5001
+    nodePort: 31001

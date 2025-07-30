@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fl-driver
+  namespace: openfaas-fn
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: driver
+        image: hsmft/fl-driver:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: OPENFAAS_USERNAME
+          value: "admin"
+        - name: OPENFAAS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: basic-auth
+              key: basic-auth-password
+        - name: OPENFAAS_GATEWAY_URL
+          value: "http://gateway.openfaas.svc.cluster.local:8080"
+        - name: NUM_ROUNDS
+          value: "3"
+        - name: NUM_CLIENTS
+          value: "2"
+        volumeMounts:
+        - name: shared-data
+          mountPath: /mnt/data
+      volumes:
+      - name: shared-data
+        hostPath:
+          path: /mnt/data
+          type: Directory

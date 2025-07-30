@@ -1,0 +1,40 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+  functionNamespace: openfaas-fn
+
+functions:
+  fl-aggregator:
+    lang: python3-http-debian
+    handler: ./aggregator
+    image: hsmft/fl-aggregator:latest
+    environment:
+      write_timeout: "60s"
+      read_timeout: "60s"
+      exec_timeout: "50s"
+    limits:
+      memory: "64Mi"
+      cpu: "50m"
+    requests:
+      memory: "32Mi"
+      cpu: "10m"
+    annotations:
+      com.openfaas.scale.zero: "false"
+
+  fl-client:
+    lang: python3-http-debian
+    handler: ./fl-client
+    image: hsmft/fl-client:latest
+    environment:
+      write_timeout: "60s"
+      read_timeout: "60s"
+      exec_timeout: "50s"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "64Mi"
+      cpu: "20m"
+    annotations:
+      com.openfaas.scale.zero: "false"

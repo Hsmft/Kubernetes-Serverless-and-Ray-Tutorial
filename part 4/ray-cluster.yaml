@@ -1,0 +1,37 @@
+apiVersion: ray.io/v1
+kind: RayCluster
+metadata:
+  name: raycluster-sample
+spec:
+  rayVersion: '2.31.0'  
+  headGroupSpec:
+    rayStartParams:
+      dashboard-host: '0.0.0.0'
+    template:
+      spec:
+        containers:
+          - name: ray-head
+            image: rayproject/ray:2.31.0  
+            ports:
+              - containerPort: 6379
+              - containerPort: 8265
+              - containerPort: 10001
+            resources:
+              requests:
+                cpu: "200m"
+                memory: "512Mi"
+  workerGroupSpecs:
+    - groupName: small-group
+      replicas: 1
+      minReplicas: 1
+      maxReplicas: 5
+      rayStartParams: {}
+      template:
+        spec:
+          containers:
+            - name: ray-worker
+              image: rayproject/ray:2.31.0  
+              resources:
+                requests:
+                  cpu: "200m"
+                  memory: "256Mi"

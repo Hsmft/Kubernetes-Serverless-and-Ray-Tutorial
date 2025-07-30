@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fl-driver-light
+  namespace: openfaas-fn
+spec:
+  template:
+    spec:
+      containers:
+      - name: driver
+        image: hsmft/fl-driver:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+        - name: gateway_url
+          value: "http://gateway.openfaas:8080"
+        - name: basic_auth_user
+          value: "admin"
+        - name: basic_auth_password
+          valueFrom:
+            secretKeyRef:
+              name: basic-auth
+              key: basic-auth-password
+      restartPolicy: Never
+  backoffLimit: 3
