@@ -1,9 +1,4 @@
-# Third Homework
-
 **Exploring Modern Cloud Paradigms: Kubernetes (K8S), Serverless and Ray**
-
-Due date until <mark>1404-03-20</mark> at [this](https://forms.gle/hCEU4nQ5e7Su4AWm6) google form.
-
 
 ## Objective
 
@@ -98,7 +93,7 @@ In this part, you will set up a local Kubernetes cluster using kind and perform 
 ### 3.Serverless Deployment on K8S
 
 <div align="center">
-  <img src="imgs/openfaas-kubernetes.png" />
+  <img src="images/openfaas-kubernetes.png" />
   <p>Source: thinkmicroservices.com</p>
 </div>
 
@@ -140,7 +135,7 @@ A brief written explanation of the serverless platform you chose, why you chose 
 ### 4.Ray on K8S
 
 <div align="center">
-  <img src="imgs/ray_on_kubernetes.png" />
+  <img src="images/ray_on_kubernetes.png" />
   <p>Source: Ray Official Website</p>
 </div>
 
