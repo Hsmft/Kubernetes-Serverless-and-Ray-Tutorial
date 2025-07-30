@@ -41,7 +41,7 @@ Verify installation of all prerequisites and note down the versions of key tools
 In this part, you will set up a local Kubernetes cluster using kind and perform basic operations.
 
 <div align="center" >
-  <img src="imgs/Kubernetes_logo_without_workmark.svg.png" />
+  <img src="images/Kubernetes_logo_without_workmark.svg.png" />
   <p>Source: github.com/kubernetes</p>
 </div>
 
